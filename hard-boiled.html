@@ -4,8 +4,139 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Egg</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+10&family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/app.css">
 </head>
 <body>
-    <h1>Welcome to Hard Boiled!</h1>
+    <!-- <h1>Hard Boiled</h1> -->
+    <div class="main">
+        <div>
+            <h1>Hard Boiled</h1>
+            <hr>
+            <!-- Timer -->
+            <div class="switch-container">
+                <div class="switch">
+                    <button id="btn9" onclick="switchTimer(540)">9 min</button>
+                    <button id="btn12" onclick="switchTimer(720)">12 min</button>
+                </div>
+            </div>
+        
+            <div class="countdown-timer">
+                <div class="timer">
+                    <div id="timer">09:00</div>
+                    <div class="timers">
+                        <button onclick="startCountdown()" class="button">Start</button>
+                        <button onclick="stopCountdown()" class="button">Stop</button>
+                        <button onclick="resetCountdown()" class="button">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="img">
+            <img src="img/hard-boiled-eggs-2.jpg" alt="">
+        </div>
+    </div>
+    <hr>
+
+    <!-- Recipe & Instructions -->
+    <div class="egg-recipe">
+        <div class="egg-tools">
+            <h2>Tools</h2>
+            <ul>
+                <li>Pot</li>
+                <li>Stove</li>
+                <li>Slotted Spoon</li>
+            </ul>
+        </div>
+
+        <div class="egg-instructions">
+            <h2>Instruction</h2>
+            <ul>
+                <li>Place eggs in a pot and cover with water (about 1 inch above the eggs).</li>
+                <li>Bring water to a rolling boil over medium-high heat.</li>
+                <li>Once building, cover the pot, remove it from heat, and let it sit for:</li>
+                    <ul>
+                        <li>9 min for a slightly firm yolk.</li>
+                        <li>12 min for a fully firm yolk.</li>
+                    </ul>
+                <li>Drain and transfer eggs to an ice bath for 5 min to cool.</li>
+                <li>Peel and serve.</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        let timeLeft = 540; // Default to 9 minutes
+        let countdown;
+        let isRunning = false;
+        const timerDisplay = document.getElementById("timer");
+        const btn9 = document.getElementById("btn9");
+        const btn12 = document.getElementById("btn12");
+
+        // Update timer display
+        function updateTimerDisplay() {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        // Start the countdown
+        function startCountdown() {
+            if (isRunning) return;
+            isRunning = true;
+
+            countdown = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    updateTimerDisplay();
+                } else {
+                    clearInterval(countdown);
+                    isRunning = false;
+                }
+            }, 1000);
+        }
+
+        // Stop the countdown
+        function stopCountdown() {
+            clearInterval(countdown);
+            isRunning = false;
+        }
+
+        // Reset the countdown
+        function resetCountdown() {
+            clearInterval(countdown);
+            
+            // Reset timeLeft to the selected timer's original value
+            if (btn9.classList.contains("active")) {
+                timeLeft = 540; // Reset to 9 minutes if "9 min" is active
+            } else {
+                timeLeft = 720; // Reset to 12 minutes if "12 min" is active
+            }
+
+            updateTimerDisplay();
+            isRunning = false;
+        }
+
+        // Switch timer between 9 min and 12 min
+        function switchTimer(newTime) {
+            clearInterval(countdown);
+            timeLeft = newTime;
+            updateTimerDisplay();
+            isRunning = false;
+
+            // Highlight active button
+            if (newTime === 540) {
+                btn9.classList.add("active");
+                btn12.classList.remove("active");
+            } else {
+                btn9.classList.remove("active");
+                btn12.classList.add("active");
+            }
+        }
+
+        // Initialize display
+        updateTimerDisplay();
+        btn9.classList.add("active");
+    </script>
 </body>
 </html>

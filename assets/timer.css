@@ -1,0 +1,90 @@
+.countdown-timer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.timers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.timer {
+    width: 10rem;
+    height: 8rem;
+    border: solid 0.25rem #848484;
+    border-radius: 50%;
+    margin: 1rem;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#timer, #timer2 {
+    font-size: 45px;
+    font-weight: 700;
+}
+
+.switch-container {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.switch {
+    width: 50%;
+    height: 2rem;
+    display: flex;
+    padding: 0.5rem;
+    background-color: #e8e8e8;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.switch button {
+    padding: 0.25rem 1rem;
+    border: none;
+    outline: none;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background 0.3s;
+    flex: 1;
+}
+
+#btn9 {
+    border-radius: 0.5rem 0 0 0.5rem;
+}
+
+#btn12 {
+    border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.switch button.active {
+    background: #ffcc34;
+}
+
+.button {
+    background: #e8e8e8;
+    width: fit-content;
+    height: auto;
+    border: none;
+    border-radius: 1rem;
+    margin: 0.2rem;
+    padding: 0.5rem 1rem;
+}
+
+.button:hover {
+    background-color: #ffcc34;
+    cursor: pointer;
+}
+
+@media (max-width: 425px) {
+    .switch {
+        width: 50%;
+    }
+}

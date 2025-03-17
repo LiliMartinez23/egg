@@ -1,0 +1,46 @@
+.egg-tools {
+    margin: 1rem;
+    background-color: #eaeaea;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+}
+
+.egg-instructions {
+    margin: 1rem;
+    background-color: #eaeaea;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+}
+
+.title {
+    width: fit-content;
+    padding: 1rem 2rem;
+}
+
+img {
+    width: 100%;
+    height: auto;
+    border: solid 2px #848484;
+}
+
+.img {
+    width: 50%;
+}
+
+@media (min-width: 1024px) {
+    .img {
+        width: 35%;
+    }
+}
+
+@media (min-width: 1440px) {
+    .img {
+        width: 25%;
+    }
+}
+
+@media (min-width: 2560px) {
+    .img {
+        width: 15%;
+    }
+}

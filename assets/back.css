@@ -1,0 +1,10 @@
+.back {
+    margin: 1rem;
+    color: #000;
+    text-decoration: none;
+}
+
+.back:hover {
+    color: #ffa500;
+    text-decoration: underline;
+}
