@@ -8,7 +8,141 @@
     <link rel="stylesheet" href="assets/app.css">
 </head>
 <body>
-    <h1 class="title">Welcome to Omelet!</h1>
-    <a href="index.html" class="back">Back</a>
+    <div class="main">
+        <div>
+            <h1>Omelet</h1><br>
+            <!-- Timer -->
+            <div class="switch-container">
+                <div class="switch">
+                    <button id="btn1" onclick="switchTimer(60)">1 min</button>
+                    <button id="btn2" onclick="switchTimer(120)">2 min</button>
+                </div>
+            </div>
+        
+            <div class="countdown-timer">
+                <div class="timer">
+                    <div id="timer">01:00</div>
+                    <div class="timers">
+                        <button onclick="startCountdown()" class="button">Start</button>
+                        <button onclick="stopCountdown()" class="button">Stop</button>
+                        <button onclick="resetCountdown()" class="button">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="img">
+            <img src="img/omelet.jpg" alt="">
+        </div>
+    </div>
+
+    <!-- Recipe & Instructions -->
+    <div class="egg-recipe">
+        <div class="egg-tools">
+            <h2>Ingredients</h2>
+            <ul>
+                <li>Eggs</li>
+                <li>Milk</li>
+                <li>Olive oil (or butter)</li>
+                <li>Salt</li>
+                <li>Pepper (optional)</li>
+                <li>Chives (optional)</li>
+            </ul>
+        </div>
+
+        <div class="egg-tools">
+            <h2>Tools</h2>
+            <ul>
+                <li>Small pan</li>
+                <li>Spatula</li>
+            </ul>
+        </div>
+
+        <div class="egg-instructions">
+            <h2>Instructions</h2>
+            <ul>
+                <li>Beat eggs in a bowl with salt, pepper, and 1 tbsp of milk per egg.</li>
+                <li>Heat a non-stick pan over medium heat with olive oil (or butter).</li>
+                <li>Pour eggs into the pan and cook undisturbed for 1-2 min.</li>
+                <li>Once the edges set, gently lift them with a spatula, tilting the pan to allow uncooked egg to flow underneath.</li>
+                <li>Add the desired filling and fold the omelet in half.</li>
+                <li>Cook for another 1-2 min until fully set.</li>
+                <li>Serve!</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        let timeLeft = 60; // Default to 3 minutes
+        let countdown;
+        let isRunning = false;
+        const timerDisplay = document.getElementById("timer");
+        const btn1 = document.getElementById("btn1");
+        const btn2 = document.getElementById("btn2");
+
+        // Update timer display
+        function updateTimerDisplay() {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        // Start the countdown
+        function startCountdown() {
+            if (isRunning) return;
+            isRunning = true;
+
+            countdown = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    updateTimerDisplay();
+                } else {
+                    clearInterval(countdown);
+                    isRunning = false;
+                }
+            }, 1000);
+        }
+
+        // Stop the countdown
+        function stopCountdown() {
+            clearInterval(countdown);
+            isRunning = false;
+        }
+
+        // Reset the countdown
+        function resetCountdown() {
+            clearInterval(countdown);
+            
+            // Reset timeLeft to the selected timer's original value
+            if (btn1.classList.contains("active")) {
+                timeLeft = 60; // Reset to 3 minutes if "3 min" is active
+            } else {
+                timeLeft = 120; // Reset to 4 minutes if "4 min" is active
+            }
+
+            updateTimerDisplay();
+            isRunning = false;
+        }
+
+        // Switch timer between 9 min and 12 min
+        function switchTimer(newTime) {
+            clearInterval(countdown);
+            timeLeft = newTime;
+            updateTimerDisplay();
+            isRunning = false;
+
+            // Highlight active button
+            if (newTime === 60) {
+                btn1.classList.add("active");
+                btn2.classList.remove("active");
+            } else {
+                btn1.classList.remove("active");
+                btn2.classList.add("active");
+            }
+        }
+
+        // Initialize display
+        updateTimerDisplay();
+        btn1.classList.add("active");
+    </script>
 </body>
 </html>

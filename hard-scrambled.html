@@ -8,7 +8,106 @@
     <link rel="stylesheet" href="assets/app.css">
 </head>
 <body>
-    <h1 class="title">Welcome to Hard Scrambled!</h1>
-    <a href="index.html" class="back">Back</a>
+    <!-- <h1>Hard Boiled</h1> -->
+    <div class="main">
+        <div>
+            <h1>Hard Scrambled</h1><br>
+        
+            <!-- Timer -->
+            <div class="countdown-timer">
+                <div class="timer">
+                    <div id="timer">00:30</div>
+                    <div class="timers">
+                        <button onclick="startCountdown()" class="button">Start</button>
+                        <button onclick="stopCountdown()" class="button">Stop</button>
+                        <button onclick="resetCountdown()" class="button">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="img">
+            <img src="img/hard-scrambled-eggs.jpg" alt="">
+        </div>
+    </div>
+
+    <!-- Recipe & Instructions -->
+    <div class="egg-recipe">
+        <div class="egg-tools">
+            <h2>Ingredients</h2>
+            <ul>
+                <li>Eggs</li>
+                <li>Milk</li>
+                <li>Olive oil (or butter)</li>
+                <li>Salt</li>
+                <li>Pepper (optional)</li>
+            </ul>
+        </div>
+
+        <div class="egg-tools">
+            <h2>Tools</h2>
+            <ul>
+                <li>Small pan</li>
+                <li>Spatula</li>
+            </ul>
+        </div>
+
+        <div class="egg-instructions">
+            <h2>Instructions</h2>
+            <ul>
+                <li>Crack eggs into a bowl, add salt, add 1 tbsp of milk per egg, and whisk until fully combined.</li>
+                <li>Heat olive oil (or butter) in a non-stick pan over medium heat.</li>
+                <li>Pour eggs into the pan and let them sit for 30 sec before stirring.</li>
+                <li>Stir gently until eggs are fully set and no liquid remains.</li>
+                <li>Serve!</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        let timeLeft = 30; // Default to 5 minutes
+        let countdown;
+        let isRunning = false;
+        const timerDisplay = document.getElementById("timer");
+
+        // Update timer display
+        function updateTimerDisplay() {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        // Start the countdown
+        function startCountdown() {
+            if (isRunning) return;
+            isRunning = true;
+
+            countdown = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    updateTimerDisplay();
+                } else {
+                    clearInterval(countdown);
+                    isRunning = false;
+                }
+            }, 1000);
+        }
+
+        // Stop the countdown
+        function stopCountdown() {
+            clearInterval(countdown);
+            isRunning = false;
+        }
+
+        // Reset the countdown
+        function resetCountdown() {
+            clearInterval(countdown);
+            timeLeft = 30;
+            updateTimerDisplay();
+            isRunning = false;
+        }
+
+        // Initialize display
+        updateTimerDisplay();
+    </script>
 </body>
 </html>

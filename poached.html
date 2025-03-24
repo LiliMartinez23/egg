@@ -8,7 +8,140 @@
     <link rel="stylesheet" href="assets/app.css">
 </head>
 <body>
-    <h1 class="title">Welcome to Poached!</h1>
-    <a href="index.html" class="back">Back</a>
+    <div class="main">
+        <div>
+            <h1>Poached</h1><br>
+            <!-- Timer -->
+            <div class="switch-container">
+                <div class="switch">
+                    <button id="btn3" onclick="switchTimer(180)">3 min</button>
+                    <button id="btn4" onclick="switchTimer(240)">4 min</button>
+                </div>
+            </div>
+        
+            <div class="countdown-timer">
+                <div class="timer">
+                    <div id="timer">03:00</div>
+                    <div class="timers">
+                        <button onclick="startCountdown()" class="button">Start</button>
+                        <button onclick="stopCountdown()" class="button">Stop</button>
+                        <button onclick="resetCountdown()" class="button">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="img">
+            <img src="img/poached-eggs.jpg" alt="">
+        </div>
+    </div>
+
+    <!-- Recipe & Instructions -->
+    <div class="egg-recipe">
+        <div class="egg-tools">
+            <h2>Ingredients</h2>
+            <ul>
+                <li>Eggs</li>
+                <li>Vinegar (optional)</li>
+                <li>Water</li>
+            </ul>
+        </div>
+
+        <div class="egg-tools">
+            <h2>Tools</h2>
+            <ul>
+                <li>Small pot</li>
+                <li>Spoon</li>
+                <li>Slotted spoon</li>
+                <li>Small bowl</li>
+            </ul>
+        </div>
+
+        <div class="egg-instructions">
+            <h2>Instructions</h2>
+            <ul>
+                <li>Bring a pot of water to a gentle simmer (around 180˚C).</li>
+                <li>Add 1 tbsp of vinegar</li>
+                <li>Crack the egg into a small bowl.</li>
+                <li>Create a vortex in the water by stirring it with a spoon, then carfully drop the egg into the center.</li>
+                <li>Cook for 3-4 min until the whites are set ad the yolk is still runny.</li>
+                <li>Remove with a slottle spoon and drian on paper towels.</li>
+                <li>Season and serve!</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        let timeLeft = 180; // Default to 3 minutes
+        let countdown;
+        let isRunning = false;
+        const timerDisplay = document.getElementById("timer");
+        const btn3 = document.getElementById("btn3");
+        const btn4 = document.getElementById("btn4");
+
+        // Update timer display
+        function updateTimerDisplay() {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        // Start the countdown
+        function startCountdown() {
+            if (isRunning) return;
+            isRunning = true;
+
+            countdown = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    updateTimerDisplay();
+                } else {
+                    clearInterval(countdown);
+                    isRunning = false;
+                }
+            }, 1000);
+        }
+
+        // Stop the countdown
+        function stopCountdown() {
+            clearInterval(countdown);
+            isRunning = false;
+        }
+
+        // Reset the countdown
+        function resetCountdown() {
+            clearInterval(countdown);
+            
+            // Reset timeLeft to the selected timer's original value
+            if (btn3.classList.contains("active")) {
+                timeLeft = 180; // Reset to 3 minutes if "3 min" is active
+            } else {
+                timeLeft = 240; // Reset to 4 minutes if "4 min" is active
+            }
+
+            updateTimerDisplay();
+            isRunning = false;
+        }
+
+        // Switch timer between 9 min and 12 min
+        function switchTimer(newTime) {
+            clearInterval(countdown);
+            timeLeft = newTime;
+            updateTimerDisplay();
+            isRunning = false;
+
+            // Highlight active button
+            if (newTime === 180) {
+                btn3.classList.add("active");
+                btn4.classList.remove("active");
+            } else {
+                btn3.classList.remove("active");
+                btn4.classList.add("active");
+            }
+        }
+
+        // Initialize display
+        updateTimerDisplay();
+        btn3.classList.add("active");
+    </script>
 </body>
 </html>

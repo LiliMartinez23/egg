@@ -8,7 +8,139 @@
     <link rel="stylesheet" href="assets/app.css">
 </head>
 <body>
-    <h1 class="title">Welcome to Soft Boiled!</h1>
-    <a href="index.html" class="back">Back</a>
+    <div class="main">
+        <div>
+            <h1>Soft Boiled</h1><br>
+            <!-- Timer -->
+            <div class="switch-container">
+                <div class="switch">
+                    <button id="btn4" onclick="switchTimer(240)">4 min</button>
+                    <button id="btn6" onclick="switchTimer(360)">6 min</button>
+                </div>
+            </div>
+        
+            <div class="countdown-timer">
+                <div class="timer">
+                    <div id="timer">04:00</div>
+                    <div class="timers">
+                        <button onclick="startCountdown()" class="button">Start</button>
+                        <button onclick="stopCountdown()" class="button">Stop</button>
+                        <button onclick="resetCountdown()" class="button">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="img">
+            <img src="img/soft-boiled-eggs.jpg" alt="">
+        </div>
+    </div>
+
+    <!-- Recipe & Instructions -->
+    <div class="egg-recipe">
+        <div class="egg-tools">
+            <h2>Ingredients</h2>
+            <ul>
+                <li>Eggs</li>
+                <li>Water</li>
+            </ul>
+        </div>
+
+        <div class="egg-tools">
+            <h2>Tools</h2>
+            <ul>
+                <li>Pot</li>
+                <li>Stove</li>
+                <li>Slotted Spoon</li>
+            </ul>
+        </div>
+
+        <div class="egg-instructions">
+            <h2>Instructions</h2>
+            <ul>
+                <li>Boil water in a pot and gently lower eggs into the water with a slotted spoon.</li>
+                <li>Cook for:</li>
+                    <ul>
+                        <li>4 min for very runny yolk.</li>
+                        <li>6 min for a slightly runny yolk.</li>
+                    </ul>
+                <li>Drain and transfer eggs to an ice bath for 2-3 min to cool.</li>
+                <li>Peel and serve.</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        let timeLeft = 240; // Default to 4 minutes
+        let countdown;
+        let isRunning = false;
+        const timerDisplay = document.getElementById("timer");
+        const btn4 = document.getElementById("btn4");
+        const btn6 = document.getElementById("btn6");
+
+        // Update timer display
+        function updateTimerDisplay() {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        // Start the countdown
+        function startCountdown() {
+            if (isRunning) return;
+            isRunning = true;
+
+            countdown = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    updateTimerDisplay();
+                } else {
+                    clearInterval(countdown);
+                    isRunning = false;
+                }
+            }, 1000);
+        }
+
+        // Stop the countdown
+        function stopCountdown() {
+            clearInterval(countdown);
+            isRunning = false;
+        }
+
+        // Reset the countdown
+        function resetCountdown() {
+            clearInterval(countdown);
+            
+            // Reset timeLeft to the selected timer's original value
+            if (btn4.classList.contains("active")) {
+                timeLeft = 240; // Reset to 4 minutes if "4 min" is active
+            } else {
+                timeLeft = 360; // Reset to 6 minutes if "6 min" is active
+            }
+
+            updateTimerDisplay();
+            isRunning = false;
+        }
+
+        // Switch timer between 9 min and 12 min
+        function switchTimer(newTime) {
+            clearInterval(countdown);
+            timeLeft = newTime;
+            updateTimerDisplay();
+            isRunning = false;
+
+            // Highlight active button
+            if (newTime === 240) {
+                btn4.classList.add("active");
+                btn6.classList.remove("active");
+            } else {
+                btn4.classList.remove("active");
+                btn6.classList.add("active");
+            }
+        }
+
+        // Initialize display
+        updateTimerDisplay();
+        btn4.classList.add("active");
+    </script>
 </body>
 </html>
